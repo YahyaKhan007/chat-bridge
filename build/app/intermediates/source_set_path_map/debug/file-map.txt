@@ -1,0 +1,35 @@
+com.spiderX.chat_bridge.app-jetified-annotation-experimental-1.1.0-0 C:\Users\YahyaKhan\.gradle\caches\transforms-3\257e0bb88528f5fc66bfd853728809aa\transformed\jetified-annotation-experimental-1.1.0\res
+com.spiderX.chat_bridge.app-jetified-lifecycle-viewmodel-savedstate-2.5.1-1 C:\Users\YahyaKhan\.gradle\caches\transforms-3\299b9ea3c250f3cab71999b61d05ee6d\transformed\jetified-lifecycle-viewmodel-savedstate-2.5.1\res
+com.spiderX.chat_bridge.app-core-1.8.0-2 C:\Users\YahyaKhan\.gradle\caches\transforms-3\3b313ed3d849c30e3d4901e4bd9b2e7a\transformed\core-1.8.0\res
+com.spiderX.chat_bridge.app-jetified-play-services-basement-18.3.0-3 C:\Users\YahyaKhan\.gradle\caches\transforms-3\4105637ca2d0ffd34d30b1a01003cfea\transformed\jetified-play-services-basement-18.3.0\res
+com.spiderX.chat_bridge.app-jetified-activity-1.5.1-4 C:\Users\YahyaKhan\.gradle\caches\transforms-3\44c24db16fe49acde218fe9d9fd63493\transformed\jetified-activity-1.5.1\res
+com.spiderX.chat_bridge.app-browser-1.4.0-5 C:\Users\YahyaKhan\.gradle\caches\transforms-3\4ce8cd4ffd6df6738a1841f01cb78292\transformed\browser-1.4.0\res
+com.spiderX.chat_bridge.app-jetified-play-services-auth-21.0.0-6 C:\Users\YahyaKhan\.gradle\caches\transforms-3\590674fe74fd5d015f2153de1c0d5e44\transformed\jetified-play-services-auth-21.0.0\res
+com.spiderX.chat_bridge.app-jetified-window-1.0.0-beta04-7 C:\Users\YahyaKhan\.gradle\caches\transforms-3\6582e67aea0be70979c64a0bfb01e347\transformed\jetified-window-1.0.0-beta04\res
+com.spiderX.chat_bridge.app-lifecycle-livedata-core-2.5.1-8 C:\Users\YahyaKhan\.gradle\caches\transforms-3\7eff0c593746d28c9116cb2bbf9cfb25\transformed\lifecycle-livedata-core-2.5.1\res
+com.spiderX.chat_bridge.app-localbroadcastmanager-1.1.0-9 C:\Users\YahyaKhan\.gradle\caches\transforms-3\9a6dbf20a12612efca271221a9b6a0ea\transformed\localbroadcastmanager-1.1.0\res
+com.spiderX.chat_bridge.app-jetified-window-java-1.0.0-beta04-10 C:\Users\YahyaKhan\.gradle\caches\transforms-3\9b0dd0bee9a81680af20f56797c52ab1\transformed\jetified-window-java-1.0.0-beta04\res
+com.spiderX.chat_bridge.app-lifecycle-runtime-2.5.1-11 C:\Users\YahyaKhan\.gradle\caches\transforms-3\a0932a185a36d17c8a90c34bfaa3b381\transformed\lifecycle-runtime-2.5.1\res
+com.spiderX.chat_bridge.app-jetified-savedstate-1.2.0-12 C:\Users\YahyaKhan\.gradle\caches\transforms-3\a60a27977c5122943dc1498c01857c4e\transformed\jetified-savedstate-1.2.0\res
+com.spiderX.chat_bridge.app-jetified-play-services-base-18.1.0-13 C:\Users\YahyaKhan\.gradle\caches\transforms-3\ad307aea8518aca9a4898bdde5fe4a60\transformed\jetified-play-services-base-18.1.0\res
+com.spiderX.chat_bridge.app-jetified-firebase-messaging-23.4.1-14 C:\Users\YahyaKhan\.gradle\caches\transforms-3\b482aab25260dc033bcb7b3923adc5d8\transformed\jetified-firebase-messaging-23.4.1\res
+com.spiderX.chat_bridge.app-lifecycle-viewmodel-2.5.1-15 C:\Users\YahyaKhan\.gradle\caches\transforms-3\f3f0ef4957b4ca34223640147a72e74c\transformed\lifecycle-viewmodel-2.5.1\res
+com.spiderX.chat_bridge.app-fragment-1.5.7-16 C:\Users\YahyaKhan\.gradle\caches\transforms-3\fbb2070bbc646b3919ef2273227002ce\transformed\fragment-1.5.7\res
+com.spiderX.chat_bridge.app-jetified-firebase-common-20.4.3-17 C:\Users\YahyaKhan\.gradle\caches\transforms-3\fd22878c3543e1218ec5eda14573d2ac\transformed\jetified-firebase-common-20.4.3\res
+com.spiderX.chat_bridge.app-debug-18 D:\Stackwise Projects\Own Products\chat_bridge\android\app\src\debug\res
+com.spiderX.chat_bridge.app-main-19 D:\Stackwise Projects\Own Products\chat_bridge\android\app\src\main\res
+com.spiderX.chat_bridge.app-google-services-20 D:\Stackwise Projects\Own Products\chat_bridge\build\app\generated\res\google-services\debug
+com.spiderX.chat_bridge.app-pngs-21 D:\Stackwise Projects\Own Products\chat_bridge\build\app\generated\res\pngs\debug
+com.spiderX.chat_bridge.app-resValues-22 D:\Stackwise Projects\Own Products\chat_bridge\build\app\generated\res\resValues\debug
+com.spiderX.chat_bridge.app-rs-23 D:\Stackwise Projects\Own Products\chat_bridge\build\app\generated\res\rs\debug
+com.spiderX.chat_bridge.app-mergeDebugResources-24 D:\Stackwise Projects\Own Products\chat_bridge\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.spiderX.chat_bridge.app-mergeDebugResources-25 D:\Stackwise Projects\Own Products\chat_bridge\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.spiderX.chat_bridge.app-merged_res-26 D:\Stackwise Projects\Own Products\chat_bridge\build\app\intermediates\merged_res\debug
+com.spiderX.chat_bridge.app-packaged_res-27 D:\Stackwise Projects\Own Products\chat_bridge\build\cloud_firestore\intermediates\packaged_res\debug
+com.spiderX.chat_bridge.app-packaged_res-28 D:\Stackwise Projects\Own Products\chat_bridge\build\firebase_auth\intermediates\packaged_res\debug
+com.spiderX.chat_bridge.app-packaged_res-29 D:\Stackwise Projects\Own Products\chat_bridge\build\firebase_core\intermediates\packaged_res\debug
+com.spiderX.chat_bridge.app-packaged_res-30 D:\Stackwise Projects\Own Products\chat_bridge\build\firebase_messaging\intermediates\packaged_res\debug
+com.spiderX.chat_bridge.app-packaged_res-31 D:\Stackwise Projects\Own Products\chat_bridge\build\firebase_storage\intermediates\packaged_res\debug
+com.spiderX.chat_bridge.app-packaged_res-32 D:\Stackwise Projects\Own Products\chat_bridge\build\google_sign_in_android\intermediates\packaged_res\debug
+com.spiderX.chat_bridge.app-packaged_res-33 D:\Stackwise Projects\Own Products\chat_bridge\build\image_gallery_saver\intermediates\packaged_res\debug
+com.spiderX.chat_bridge.app-packaged_res-34 D:\Stackwise Projects\Own Products\chat_bridge\build\shared_preferences_android\intermediates\packaged_res\debug

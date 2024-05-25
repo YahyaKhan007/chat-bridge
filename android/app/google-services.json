@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "297048515484",
+    "project_id": "chat-bridge-f9a1a",
+    "storage_bucket": "chat-bridge-f9a1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297048515484:android:18415ce43c5682df275e59",
+        "android_client_info": {
+          "package_name": "com.spiderX.chat_bridge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297048515484-6sl7tgtg0jsftics3525utqjpdnnuikd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spiderX.chat_bridge",
+            "certificate_hash": "d53380d16c2891f3f3719d63ed8243a2bfc9946c"
+          }
+        },
+        {
+          "client_id": "297048515484-2bnouc3mjetvsn0vgd0stiakqtgu4d8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArcEhxTmvbsYc6AfmXWcwzkUrwaDAagB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297048515484-2bnouc3mjetvsn0vgd0stiakqtgu4d8m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "297048515484-j6hqtelct1ueqjeedtqr70o2b9li87cd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatBridge"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

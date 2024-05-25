@@ -1,0 +1,1 @@
+ D:\\Stackwise\ Projects\\Own\ Products\\chat_bridge\\.dart_tool\\flutter_build\\d5961d4934bb81ef86bb4ccffdc84d59\\native_assets.yaml: 
