@@ -12,3 +12,7 @@ class GoogleSignInEvent extends AuthEvent {}
 class FacebookSignInEvent extends AuthEvent {}
 
 class TwitterSignInEvent extends AuthEvent {}
+
+class SignupEvent extends AuthEvent {
+  const SignupEvent();
+}

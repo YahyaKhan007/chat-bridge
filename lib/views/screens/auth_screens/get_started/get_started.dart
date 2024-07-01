@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chat_bridge/blocs/auth_bloc/auth_bloc.dart';
 import 'package:chat_bridge/views/screens/auth_screens/get_started/widgets/signin_option.dart';
 import 'package:chat_bridge/views/utils/app_colors.dart';
@@ -5,6 +7,9 @@ import 'package:chat_bridge/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../../../../services/routes/routes.dart';
 
 class GetStarted extends StatelessWidget {
   const GetStarted({super.key});
@@ -84,13 +89,15 @@ class GetStarted extends StatelessWidget {
                       textColor: AppColors.kcBackgroundColor,
                       buttonText: "Sign Up",
                       horizontalMargin: size.width * 0.2,
-                      onTap: () {}),
+                      onTap: () {
+                        Get.toNamed(RouterHelper.register);
+                      }),
                   8.h.verticalSpace,
                   signinOptionWidget(
                       context: context,
                       size: size,
                       // color: AppColors.kcDarkColor,
-                      key: 'Signup',
+                      key: 'login',
                       textColor: AppColors.kcDarkColor,
                       buttonText: "Log in",
                       horizontalMargin: size.width * 0.2,

@@ -17,28 +17,30 @@ class OnBoardingBottomButtons extends StatelessWidget {
       bottom: 20,
       left: 20.w,
       right: 20.w,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: CustomButton(
-              onTap: onSkip,
-              buttonText: 'Skip',
-              backgroundColor: Colors.white,
-              borderColor: AppColors.kcBlueColor,
+      child: FittedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: CustomButton(
+                onTap: onSkip,
+                buttonText: 'Skip',
+                backgroundColor: Colors.white,
+                borderColor: AppColors.kcBlueColor,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: CustomButton(
-              color: AppColors.kcBackgroundColor,
-              onTap: onContinue,
-              backgroundColor: AppColors.kcDarkColor,
-              buttonText: 'Continue',
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: CustomButton(
+                color: AppColors.kcBackgroundColor,
+                onTap: onContinue,
+                backgroundColor: AppColors.kcDarkColor,
+                buttonText: 'Continue',
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
