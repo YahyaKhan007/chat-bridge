@@ -14,5 +14,20 @@ class FacebookSignInEvent extends AuthEvent {}
 class TwitterSignInEvent extends AuthEvent {}
 
 class SignupEvent extends AuthEvent {
-  const SignupEvent();
+  final String email;
+  final String password;
+  final String confirmPassword;
+  final String fullName;
+
+  const SignupEvent(
+      {required this.email,
+      required this.password,
+      required this.confirmPassword,
+      required this.fullName});
+}
+
+class LoginEvent extends AuthEvent {
+  final String email;
+  final String password;
+  const LoginEvent({required this.email, required this.password});
 }

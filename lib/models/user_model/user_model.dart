@@ -1,31 +1,37 @@
-import 'dart:developer';
-
 class UserModel {
   final String uid;
   final String fullName;
   final String emailAddress;
-  final String phoneNumber;
+  String phoneNumber;
   final bool isVarified;
+  String country;
+  String city;
+  String nativeLanguage;
+  List<String> interestedLanguages;
 
   UserModel({
-    required this.isVarified,
     required this.uid,
     required this.fullName,
     required this.emailAddress,
     required this.phoneNumber,
+    required this.isVarified,
+    required this.country,
+    required this.city,
+    required this.nativeLanguage,
+    required this.interestedLanguages,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    log('Full Name : ${json['fullName']}');
-    log('Phone Number : ${json['phoneNumber']}');
-    log("Email Address : ${json['emailAddress']}");
-    log(' uid : ${json['uid']}');
     return UserModel(
       uid: json['uid'],
       fullName: json['fullName'],
       isVarified: json['isVarified'],
       emailAddress: json['emailAddress'],
       phoneNumber: json['phoneNumber'],
+      country: json['country'],
+      city: json['city'],
+      nativeLanguage: json['nativeLanguage'],
+      interestedLanguages: List<String>.from(json['interestedLanguages']),
     );
   }
 
@@ -36,6 +42,10 @@ class UserModel {
       'isVarified': isVarified,
       'emailAddress': emailAddress,
       'phoneNumber': phoneNumber,
+      'country': country,
+      'city': city,
+      'nativeLanguage': nativeLanguage,
+      'interestedLanguages': interestedLanguages,
     };
   }
 }

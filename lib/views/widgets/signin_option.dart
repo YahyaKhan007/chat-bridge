@@ -24,31 +24,27 @@ Widget signinOptionWidget(
       width: size.width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.r),
-          border: Border.all(color: AppColors.kcLightColor, width: 0.8),
+          border: Border.all(color: AppColors.kcLightColor, width: 1.5),
           color: color ?? AppColors.kcBackgroundColor),
       child: Row(
         mainAxisSize: MainAxisSize.max,
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        // crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Visibility(
             visible: image != null ? true : false,
-            child: Expanded(
-              flex: 1,
-              child: image != null ? Image.asset(image) : const SizedBox(),
-            ),
+            child: image != null ? Image.asset(image) : const SizedBox(),
           ),
-          Expanded(
-              flex: 10,
-              child: Center(
-                child: Text(
-                  buttonText,
-                  style: TextStyle(
-                    fontSize: textSize ?? 12.sp,
-                    color: textColor ?? AppColors.kcLightColor,
-                  ),
-                ),
-              ))
+          8.w.horizontalSpace,
+          Center(
+            child: Text(
+              buttonText,
+              style: TextStyle(
+                fontSize: textSize ?? 12.sp,
+                color: textColor ?? AppColors.kcLightColor,
+              ),
+            ),
+          )
         ],
       ),
     ),

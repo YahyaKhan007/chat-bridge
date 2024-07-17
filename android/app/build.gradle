@@ -86,4 +86,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+
+}

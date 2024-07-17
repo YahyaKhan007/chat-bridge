@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../../models/models.dart';
+import '../../services/getx_controller/main_controller.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -23,15 +24,58 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.dbService,
     required this.snackBarService,
   }) : super(const AuthState()) {
-    on<GoogleSignInEvent>(onGoogleSignIn);
-    on<FacebookSignInEvent>(onFacebookSignIn);
-    on<TwitterSignInEvent>(onTwitterSignIn);
-    // on<SignupEvent>();
+    on<GoogleSignInEvent>(_onGoogleSignIn);
+    on<FacebookSignInEvent>(_onFacebookSignIn);
+    on<TwitterSignInEvent>(_onTwitterSignIn);
+    on<LoginEvent>(_loginUser);
+    on<SignupEvent>(_signupUser);
     // on<SigninEvent>();
   }
 
+  void _signupUser(SignupEvent event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(isLoading: true));
+
+    final mainController = Get.find<ChatBridgeMainController>();
+
+    log("Entered full name is ${event.fullName}");
+
+    final signupDetails = await authService.signupUserWithEmailPassword(
+        userEmail: event.email,
+        userPassword: event.password,
+        confirmPassword: event.confirmPassword,
+        fullName: event.fullName);
+
+    if (signupDetails.isSuccess == true) {
+      emit(state.copyWith(isLoading: false));
+      mainController.currentUserModel.value = signupDetails.userModel;
+
+      Get.offAllNamed(RouterHelper.completeProfile);
+    }
+    emit(state.copyWith(isLoading: false));
+  }
+
+  void _loginUser(LoginEvent event, Emitter<AuthState> emit) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      final mainController = Get.find<ChatBridgeMainController>();
+      final user = await authService.loginUser(
+          email: event.email, password: event.password);
+
+      if (user.isSuccess == true) {
+        mainController.currentUserModel.value = user.userModel;
+        emit(state.copyWith(isLoading: false));
+
+        Get.offAllNamed(RouterHelper.dashboard);
+      }
+    } catch (e, stackTrace) {
+      emit(state.copyWith(isLoading: false));
+
+      log("stackTrace : ${stackTrace.toString()}");
+    }
+  }
+
 // *  Google Sign in
-  void onGoogleSignIn(GoogleSignInEvent event, Emitter<AuthState> emit) async {
+  void _onGoogleSignIn(GoogleSignInEvent event, Emitter<AuthState> emit) async {
     try {
       emit(state.copyWith(isLoading: true));
       final googleResponse = await authService.signInwithGoogle();
@@ -42,6 +86,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (googleResponse.userCredential!.additionalUserInfo!.isNewUser) {
           UserModel newUser = UserModel(
               isVarified: true,
+              city: '',
+              country: '',
+              interestedLanguages: [],
+              nativeLanguage: '',
               uid: user!.uid,
               fullName: user.displayName!,
               emailAddress: user.email!,
@@ -80,8 +128,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
 // *  Facebook Sign in
-  void onFacebookSignIn(FacebookSignInEvent event, Emitter<AuthState> emit) {}
+  void _onFacebookSignIn(FacebookSignInEvent event, Emitter<AuthState> emit) {}
 
 // *  Twitter Sign in
-  void onTwitterSignIn(TwitterSignInEvent event, Emitter<AuthState> emit) {}
+  void _onTwitterSignIn(TwitterSignInEvent event, Emitter<AuthState> emit) {}
 }

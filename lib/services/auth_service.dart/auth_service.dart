@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, unused_local_variable
 
 import 'dart:developer';
+import 'package:chat_bridge/views/utils/app_colors.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,95 +30,96 @@ class AuthService {
   }
 
 // ^ Signup User
-  Future<bool> signupUserWithEmailPassword({
+  Future<({bool isSuccess, UserModel? userModel})> signupUserWithEmailPassword({
     required String userEmail,
     required String userPassword,
     required String confirmPassword,
-    required bool isOtpApproved,
+    required String fullName,
+    // required bool isOtpApproved,
   }) async {
-    log('came 1 to signup  ');
     if (userEmail.isEmpty ||
         userPassword.isEmpty ||
         userPassword != confirmPassword) {
       snackBarService.showSnackbar(
           message: 'Please Enter Correct Credentials',
           duration: 2,
+          color: Colors.red,
           title: "Wrong Credentials");
-      return false;
+      return (isSuccess: false, userModel: null);
     } else {
       try {
-        // * Otp Not  approved
+        //  Otp Not  approved
 
-        if (!isOtpApproved) {
-          log("Hello  GGggg   OTP not approved");
-          myOtp.setConfig(
-              appEmail: "me@rohitchouhan.com",
-              appName: "Email OTP",
-              userEmail: userEmail,
-              otpLength: 4,
-              otpType: OTPType.digitsOnly);
+        // if (!isOtpApproved) {
+        //   log("Hello  GGggg   OTP not approved");
+        //   myOtp.setConfig(
+        //       appEmail: "me@rohitchouhan.com",
+        //       appName: "Email OTP",
+        //       userEmail: userEmail,
+        //       otpLength: 4,
+        //       otpType: OTPType.digitsOnly);
 
-          if (await myOtp.sendOTP() == true) {
+        //   if (await myOtp.sendOTP() == true) {
+        //     snackBarService.showSnackbar(
+        //         message: "OTP has been sent to your email",
+        //         duration: 2,
+        //         title: "OTP sent",
+        //         color: Colors.green);
+
+        //     // Get.to(() => OTPScreen(
+        //     //       confirmPassword: confirmPassword,
+        //     //       password: userPassword,
+        //     //       email: userEmail,
+        //     //       myAuth: myOtp,
+        //     //     ));
+
+        //     return true;
+        //   } else {
+        //     snackBarService.showSnackbar(
+        //         message: "OTP Failed",
+        //         duration: 2,
+        //         title: "OTP sending failed",
+        //         color: Colors.red);
+        //     return false;
+        //   }
+        // }
+        // // * Otp  approved
+        // else {
+        // log("Hello  GGggg   OTP  approved");
+
+        var userCredential = await auth.createUserWithEmailAndPassword(
+            email: userEmail, password: userPassword);
+
+        log(userCredential.user!.email.toString());
+
+        User? user = userCredential.user;
+
+        if (user != null) {
+          UserModel newUserMode = UserModel(
+              city: '',
+              country: '',
+              interestedLanguages: [],
+              nativeLanguage: '',
+              uid: userCredential.user!.uid,
+              fullName: fullName,
+              emailAddress: userEmail,
+              phoneNumber: '',
+              isVarified: true);
+
+          var result =
+              await DataBaseService().addUserToFireStore(userData: newUserMode);
+
+          if (result == true) {
             snackBarService.showSnackbar(
-                message: "OTP has been sent to your email",
-                duration: 2,
-                title: "OTP sent",
-                color: Colors.green);
-
-            // Get.to(() => OTPScreen(
-            //       confirmPassword: confirmPassword,
-            //       password: userPassword,
-            //       email: userEmail,
-            //       myAuth: myOtp,
-            //     ));
-
-            return true;
-          } else {
-            snackBarService.showSnackbar(
-                message: "OTP Failed",
-                duration: 2,
-                title: "OTP sending failed",
-                color: Colors.red);
-            return false;
+                message: "Welcome to Inventory Object",
+                duration: 3,
+                color: AppColors.kcGreen,
+                title: 'Signup Successful');
+            return (isSuccess: true, userModel: newUserMode);
           }
-        }
-        // * Otp  approved
-        else {
-          log("Hello  GGggg   OTP  approved");
+          // }
 
-          var userCredential = await auth.createUserWithEmailAndPassword(
-              email: userEmail, password: userPassword);
-          log('came 2 to signup  ');
-
-          log(userCredential.user!.email.toString());
-
-          User? user = userCredential.user;
-          log('came 3 to signup  ');
-
-          if (user != null) {
-            UserModel newUserMode = UserModel(
-                uid: userCredential.user!.uid,
-                fullName: '',
-                emailAddress: userEmail,
-                phoneNumber: '',
-                isVarified: true);
-            log('came 4 to signup  ');
-
-            var result = await DataBaseService()
-                .addUserToFireStore(userData: newUserMode);
-
-            log('came 5 to signup  ');
-
-            if (result == true) {
-              snackBarService.showSnackbar(
-                  message: "Welcome to Inventory Object",
-                  duration: 3,
-                  title: 'Signup Successful');
-              return true;
-            }
-          }
-
-          return false;
+          return (isSuccess: false, userModel: null);
         }
       } on FirebaseException catch (e) {
         snackBarService.showSnackbar(
@@ -125,13 +127,14 @@ class AuthService {
             duration: 2,
             title: 'Signup Failed',
             color: Colors.red);
-        return false;
+        return (isSuccess: false, userModel: null);
       } catch (e, stackTrace) {
         log('Error : ${e.toString()}\n\n');
         log('stackTrace : ${stackTrace.toString()}');
-        return false;
+        return (isSuccess: false, userModel: null);
       }
     }
+    return (isSuccess: false, userModel: null);
   }
 
 // ^ Google Sign IN
@@ -197,15 +200,14 @@ class AuthService {
       return (isSuccess: false, userModel: null);
     } else {
       try {
-        log("came to Login");
         UserCredential userCredential = await auth.signInWithEmailAndPassword(
             email: email, password: password);
-
-        String uid = userCredential.user!.uid;
 
         User? currentUser = FirebaseAuth.instance.currentUser;
 
         if (currentUser != null) {
+          String uid = userCredential.user!.uid;
+
           UserModel? currentUser = await dbService.getUserbyUid(uid);
           snackBarService.showSnackbar(
             message: "Welcome Back ${currentUser!.fullName}",

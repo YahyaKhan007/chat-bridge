@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:chat_bridge/blocs/auth_bloc/auth_bloc.dart';
-import 'package:chat_bridge/views/screens/auth_screens/get_started/widgets/signin_option.dart';
+import 'package:chat_bridge/views/widgets/signin_option.dart';
 import 'package:chat_bridge/views/utils/app_colors.dart';
 import 'package:chat_bridge/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +99,9 @@ class GetStarted extends StatelessWidget {
                       textColor: AppColors.kcDarkColor,
                       buttonText: "Log in",
                       horizontalMargin: size.width * 0.2,
-                      onTap: () {}),
+                      onTap: () {
+                        Get.toNamed(RouterHelper.login);
+                      }),
                   48.h.verticalSpace,
                   Text(
                     "Privacy Policy - Terms of service",

@@ -1,16 +1,24 @@
+import 'package:chat_bridge/blocs/auth_bloc/auth_bloc.dart';
 import 'package:chat_bridge/views/screens/auth_screens/registeration.dart/widgets/textfield_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/utils.dart';
 import '../../../widgets/custome_button.dart';
 import '../../../widgets/terms_and_condition.dart';
-import '../../views.dart';
 
+// ignore: must_be_immutable
 class RegistrationScreen extends StatelessWidget {
-  const RegistrationScreen({super.key});
+  RegistrationScreen({super.key});
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,31 +53,41 @@ class RegistrationScreen extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16).w,
-                child: Column(
-                  children: [
-                    Text(
-                      "Register",
-                      style: TextStyle(
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.kcDarkColor),
-                    ),
-                    24.h.verticalHeight,
-                    nameRow(size: size),
-                    16.h.verticalHeight,
-                    emailPassColumn(
-                        size: size,
-                        key: 'E-mail',
-                        hintText: 'Enter your email'),
-                    16.h.verticalHeight,
-                    emailPassColumn(
-                        size: size, key: 'Password', hintText: "*******"),
-                    16.h.verticalHeight,
-                    emailPassColumn(
-                        size: size,
-                        key: 'Confirm Password ',
-                        hintText: "*******"),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Register",
+                        style: TextStyle(
+                            fontSize: 30.sp,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.kcDarkColor),
+                      ),
+                      24.h.verticalHeight,
+                      nameRow(
+                          size: size,
+                          firstNameController: firstNameController,
+                          lastNameController: lastNameController),
+                      16.h.verticalHeight,
+                      emailPassColumn(
+                          controller: emailController,
+                          size: size,
+                          key: 'E-mail',
+                          hintText: 'Enter your email'),
+                      16.h.verticalHeight,
+                      emailPassColumn(
+                          controller: passwordController,
+                          size: size,
+                          key: 'Password',
+                          hintText: "*******"),
+                      16.h.verticalHeight,
+                      emailPassColumn(
+                          controller: confirmPasswordController,
+                          size: size,
+                          key: 'Confirm Password ',
+                          hintText: "*******"),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -82,7 +100,14 @@ class RegistrationScreen extends StatelessWidget {
                     textColor: AppColors.kcBackgroundColor,
                     fontWeight: FontWeight.w600,
                     onTap: () {
-                      Get.to(() => CompleteProfile());
+                      // Get.to(() => CompleteProfile());
+                      context.read<AuthBloc>().add(SignupEvent(
+                          confirmPassword: confirmPasswordController.text,
+                          email: emailController.text,
+                          password: passwordController.text,
+                          fullName:
+                              "${firstNameController.text} ${lastNameController.text}"
+                                  .toString()));
                     },
                     circularRadius: 30.r),
                 16.h.verticalHeight,
@@ -100,6 +125,7 @@ class RegistrationScreen extends StatelessWidget {
     required Size size,
     required String key,
     String? hintText,
+    required TextEditingController controller,
   }) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -113,11 +139,15 @@ class RegistrationScreen extends StatelessWidget {
             ),
           ),
           8.h.verticalSpace,
-          showCustomTextField(isPassword: false, hintText: hintText),
+          showCustomTextField(
+              isPassword: false, hintText: hintText, controller: controller),
         ]);
   }
 
-  Widget nameRow({required Size size}) {
+  Widget nameRow(
+      {required Size size,
+      required TextEditingController firstNameController,
+      required TextEditingController lastNameController}) {
     return SizedBox(
       child: Row(
         children: [

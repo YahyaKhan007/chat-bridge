@@ -9,13 +9,26 @@ class RouterHelper {
 
   static const String login = '/login';
   static const String register = '/register';
+  static const String completeProfile = '/completeProfile';
+
+  static const String special = '/special';
+  static const String chatList = '/chatList';
+  static const String chatRoom = '/chatRoom';
+  static const String profile = '/profile';
+  static const String homeScreen = '/homeScreen';
 
   static List<GetPage> routes = [
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: onboarding, page: () => const OnBoardingScreen()),
-    GetPage(name: login, page: () => const LoginPage()),
+    GetPage(name: login, page: () => LoginPage()),
     GetPage(name: getStarted, page: () => const GetStarted()),
-    GetPage(name: dashboard, page: () => const DashboardScreen()),
-    GetPage(name: register, page: () => const RegistrationScreen()),
+    GetPage(name: dashboard, page: () => DashboardScreen()),
+    GetPage(name: register, page: () => RegistrationScreen()),
+    GetPage(name: completeProfile, page: () => CompleteProfile()),
+    GetPage(name: special, page: () => const SpecialScreen()),
+    GetPage(name: chatList, page: () => const ChatListScreen()),
+    GetPage(name: chatRoom, page: () => const ChatroomScreen()),
+    GetPage(name: profile, page: () => const ProfileScreen()),
+    GetPage(name: homeScreen, page: () => const HomeScreen()),
   ];
 }
