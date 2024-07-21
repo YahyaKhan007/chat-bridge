@@ -1,5 +1,6 @@
 import 'package:chat_bridge/bindings.dart';
 import 'package:chat_bridge/blocs/auth_bloc/auth_bloc.dart';
+import 'package:chat_bridge/blocs/chat_bloc/chat_bloc.dart';
 import 'package:chat_bridge/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:chat_bridge/blocs/onboarding_bloc/on_boarding_bloc.dart';
 import 'package:chat_bridge/blocs/splash/splash_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:uuid/uuid.dart';
 
 import 'firebase_options.dart';
 import 'package:get/get.dart';
@@ -16,6 +18,7 @@ import 'package:get/get.dart';
 import 'services/routes/routes.dart';
 import 'services/services.dart';
 
+var uuid = const Uuid();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -40,6 +43,11 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: ((context) => OnBoardingBloc())),
+            BlocProvider(
+                create: ((context) => ChatBloc(
+                    dbService: DataBaseService(),
+                    authService: AuthService(),
+                    chatService: ChatService()))),
             BlocProvider(
               create: ((context) => SplashBloc(
                   authService: AuthService(), dbService: DataBaseService())),

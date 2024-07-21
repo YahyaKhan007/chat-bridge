@@ -27,7 +27,16 @@ class RouterHelper {
     GetPage(name: completeProfile, page: () => CompleteProfile()),
     GetPage(name: special, page: () => const SpecialScreen()),
     GetPage(name: chatList, page: () => const ChatListScreen()),
-    GetPage(name: chatRoom, page: () => const ChatroomScreen()),
+    GetPage(
+      name: chatRoom,
+      page: () {
+        final args = Get.arguments as Map<String, dynamic>;
+        return ChatroomScreen(
+          chatModel: args['chatModel'],
+          targetUser: args['targetUser'],
+        );
+      },
+    ),
     GetPage(name: profile, page: () => const ProfileScreen()),
     GetPage(name: homeScreen, page: () => const HomeScreen()),
   ];

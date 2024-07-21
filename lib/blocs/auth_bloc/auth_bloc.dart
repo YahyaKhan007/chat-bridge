@@ -33,9 +33,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _signupUser(SignupEvent event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    // emit(state.copyWith(isLoading: true));
 
     final mainController = Get.find<ChatBridgeMainController>();
+    mainController.isLoading.value = true;
 
     log("Entered full name is ${event.fullName}");
 
@@ -46,29 +47,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         fullName: event.fullName);
 
     if (signupDetails.isSuccess == true) {
-      emit(state.copyWith(isLoading: false));
+      mainController.isLoading.value = false;
+
       mainController.currentUserModel.value = signupDetails.userModel;
 
       Get.offAllNamed(RouterHelper.completeProfile);
     }
-    emit(state.copyWith(isLoading: false));
+    mainController.isLoading.value = false;
   }
 
   void _loginUser(LoginEvent event, Emitter<AuthState> emit) async {
+    final mainController = Get.find<ChatBridgeMainController>();
     try {
-      emit(state.copyWith(isLoading: true));
-      final mainController = Get.find<ChatBridgeMainController>();
+      mainController.isLoading.value = true;
+
       final user = await authService.loginUser(
           email: event.email, password: event.password);
 
       if (user.isSuccess == true) {
         mainController.currentUserModel.value = user.userModel;
-        emit(state.copyWith(isLoading: false));
+        mainController.isLoading.value = true;
+        getAllUsers();
 
         Get.offAllNamed(RouterHelper.dashboard);
+      } else {
+        mainController.isLoading.value = false;
       }
     } catch (e, stackTrace) {
-      emit(state.copyWith(isLoading: false));
+      mainController.isLoading.value = true;
 
       log("stackTrace : ${stackTrace.toString()}");
     }
@@ -132,4 +138,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
 // *  Twitter Sign in
   void _onTwitterSignIn(TwitterSignInEvent event, Emitter<AuthState> emit) {}
+
+  getAllUsers() async {
+    dbService.getAllUsers();
+  }
 }

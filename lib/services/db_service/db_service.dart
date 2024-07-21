@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:chat_bridge/models/chat_models/message_model/message_model.dart';
 import 'package:chat_bridge/services/getx_controller/main_controller.dart';
 import 'package:chat_bridge/services/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../../models/models.dart';
@@ -30,7 +32,7 @@ class DataBaseService {
   }
 
 // ^ getting user by uid
-  Future<UserModel?> getUserbyUid(String uid) async {
+  Future<UserModel>? getUserbyUid(String uid) async {
     UserModel? userModel;
     log("===================================>>$uid");
 
@@ -43,7 +45,7 @@ class DataBaseService {
       log(userModel.fullName.toString());
     }
 
-    return userModel;
+    return userModel!;
   }
 
   Future<bool> updateUserDetails(
@@ -80,4 +82,83 @@ class DataBaseService {
       return false;
     }
   }
+
+  // getAllUsers() async {
+  //   try {
+  //     final mainController = Get.find<ChatBridgeMainController>();
+
+  //     var snapshot = await firestoreAuth.collection('users').get();
+  //     if (snapshot.docs.isNotEmpty) {
+  //       for (var document in snapshot.docs) {
+  //         var userMap = document.data();
+  //         final user = UserModel.fromJson(userMap);
+  //         mainController.allUsers.add(user);
+  //       }
+  //     }
+  //   } catch (e, stackTrace) {
+  //     log('stack trace   : $stackTrace');
+  //   }
+  // }
+
+  Future<void> getAllUsers() async {
+    try {
+      // Ensure ChatBridgeMainController is registered with GetX
+      final mainController = Get.find<ChatBridgeMainController>();
+
+      // Reference to Firestore
+      FirebaseFirestore firestoreAuth = FirebaseFirestore.instance;
+
+      // Fetch the users collection snapshot
+      QuerySnapshot snapshot = await firestoreAuth.collection('users').get();
+
+      // Check if there are any documents
+      if (snapshot.docs.isNotEmpty) {
+        // Clear any existing users in the mainController
+        mainController.allUsers.clear();
+
+        // Iterate through each document and map to UserModel
+        for (var document in snapshot.docs) {
+          var userMap = document.data() as Map<String, dynamic>;
+          final user = UserModel.fromJson(userMap);
+          if (user.uid != FirebaseAuth.instance.currentUser!.uid) {
+            mainController.allUsers.add(user);
+          }
+        }
+      }
+    } catch (e, stackTrace) {
+      log('Error fetching users: $e');
+      log('Stack trace: $stackTrace');
+    }
+  }
+
+  Future<void> addMessageToFirestore(
+      {required MessageModel newMessage,
+      required ChatroomModel chatroom}) async {
+    try {
+      firestoreAuth
+          .collection('chatrooms')
+          .doc(chatroom.chatroomID)
+          .collection('messages')
+          .doc(newMessage.messageID)
+          .set(
+            newMessage.toJson(),
+          )
+          .then((value) {
+        chatroom.updatedOn = Timestamp.now();
+        chatroom.fromUser = newMessage.sender!;
+        chatroom.lastMessage = newMessage.text!;
+
+        return firestoreAuth
+            .collection('chatrooms')
+            .doc(chatroom.chatroomID)
+            .update(chatroom.toJson());
+      });
+    } catch (e, stackTrace) {
+      log("stackTrace : ${stackTrace.toString()}");
+    }
+  }
+
+  Future<void> updateMessageInFirestore(
+      {required MessageModel updatedMessage,
+      required ChatroomModel chatroom}) async {}
 }

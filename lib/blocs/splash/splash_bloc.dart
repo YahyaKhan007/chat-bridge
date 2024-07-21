@@ -29,8 +29,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     final isFirstTime = box.read('isFirstTime');
     final mainController = Get.find<ChatBridgeMainController>();
 
-    await Future.delayed(const Duration(seconds: 2));
-
     if (isFirstTime == true) {
       Get.offAllNamed(RouterHelper.onboarding);
     } else {
@@ -46,9 +44,14 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         if (currentUser!.country != '') {
           Get.offAllNamed(RouterHelper.completeProfile);
         } else {
+          getAllUsers();
           Get.offAllNamed(RouterHelper.dashboard);
         }
       }
     }
+  }
+
+  getAllUsers() async {
+    dbService.getAllUsers();
   }
 }

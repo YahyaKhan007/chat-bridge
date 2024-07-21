@@ -28,7 +28,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         interestedLanguages: event.interestedLanguages,
         photo: "mainController.pickedImage.value!.path");
     if (res) {
-      mainController.currentUserModel.value = null;
+      mainController.pickedImage.value = null;
+      getAllUsers();
       Get.offAllNamed(RouterHelper.dashboard);
     }
   }
@@ -47,5 +48,10 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     }
 
     mainControler.pickedImage.value = xFile;
+  }
+
+  getAllUsers() async {
+    final dbService = DataBaseService();
+    dbService.getAllUsers();
   }
 }

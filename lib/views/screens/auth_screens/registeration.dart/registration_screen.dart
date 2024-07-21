@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chat_bridge/blocs/auth_bloc/auth_bloc.dart';
 import 'package:chat_bridge/views/screens/auth_screens/registeration.dart/widgets/textfield_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -164,7 +166,10 @@ class RegistrationScreen extends StatelessWidget {
                   ),
                 ),
                 8.h.verticalSpace,
-                showCustomTextField(isPassword: false, hintText: "First Name"),
+                showCustomTextField(
+                    isPassword: false,
+                    hintText: "First Name",
+                    controller: firstNameController),
               ],
             ),
           ),
@@ -182,7 +187,10 @@ class RegistrationScreen extends StatelessWidget {
                   ),
                 ),
                 8.h.verticalSpace,
-                showCustomTextField(isPassword: false, hintText: "Last Name"),
+                showCustomTextField(
+                    isPassword: false,
+                    hintText: "Last Name",
+                    controller: lastNameController),
               ],
             ),
           )
