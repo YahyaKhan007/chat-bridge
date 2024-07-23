@@ -8,6 +8,7 @@ class UserModel {
   String city;
   String nativeLanguage;
   List<String> interestedLanguages;
+  int uniqueNumber;
 
   UserModel({
     required this.uid,
@@ -19,6 +20,7 @@ class UserModel {
     required this.city,
     required this.nativeLanguage,
     required this.interestedLanguages,
+    required this.uniqueNumber,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class UserModel {
       country: json['country'],
       city: json['city'],
       nativeLanguage: json['nativeLanguage'],
+      uniqueNumber: json['uniqueNumber'],
       interestedLanguages: List<String>.from(json['interestedLanguages']),
     );
   }
@@ -44,6 +47,7 @@ class UserModel {
       'phoneNumber': phoneNumber,
       'country': country,
       'city': city,
+      'uniqueNumber': uniqueNumber,
       'nativeLanguage': nativeLanguage,
       'interestedLanguages': interestedLanguages,
     };

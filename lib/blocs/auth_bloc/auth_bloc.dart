@@ -29,16 +29,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<TwitterSignInEvent>(_onTwitterSignIn);
     on<LoginEvent>(_loginUser);
     on<SignupEvent>(_signupUser);
-    // on<SigninEvent>();
   }
 
   void _signupUser(SignupEvent event, Emitter<AuthState> emit) async {
-    // emit(state.copyWith(isLoading: true));
-
     final mainController = Get.find<ChatBridgeMainController>();
     mainController.isLoading.value = true;
-
-    log("Entered full name is ${event.fullName}");
 
     final signupDetails = await authService.signupUserWithEmailPassword(
         userEmail: event.email,
@@ -48,12 +43,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (signupDetails.isSuccess == true) {
       mainController.isLoading.value = false;
-
       mainController.currentUserModel.value = signupDetails.userModel;
-
       Get.offAllNamed(RouterHelper.completeProfile);
+    } else {
+      mainController.isLoading.value = false;
     }
-    mainController.isLoading.value = false;
   }
 
   void _loginUser(LoginEvent event, Emitter<AuthState> emit) async {
@@ -75,7 +69,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } catch (e, stackTrace) {
       mainController.isLoading.value = true;
-
       log("stackTrace : ${stackTrace.toString()}");
     }
   }
@@ -83,15 +76,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 // *  Google Sign in
   void _onGoogleSignIn(GoogleSignInEvent event, Emitter<AuthState> emit) async {
     try {
+      final mainController = Get.find<ChatBridgeMainController>();
       emit(state.copyWith(isLoading: true));
       final googleResponse = await authService.signInwithGoogle();
 
       if (googleResponse.res == true) {
         User? user = googleResponse.userCredential!.user;
 
+        final allUniqueNumbers = await dbService.getAllUniqueNumbers();
+
+        int newUniqueNumber;
+        do {
+          newUniqueNumber = authService.generateUniqueInteger();
+        } while (allUniqueNumbers != null &&
+            allUniqueNumbers.contains(newUniqueNumber));
+
+        mainController.uniqueNumber.value = newUniqueNumber;
+        await dbService.pushUniqueNumberToFireStore();
+
         if (googleResponse.userCredential!.additionalUserInfo!.isNewUser) {
           UserModel newUser = UserModel(
               isVarified: true,
+              uniqueNumber: newUniqueNumber,
               city: '',
               country: '',
               interestedLanguages: [],
@@ -102,6 +108,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               phoneNumber: '');
           var result = await dbService.addUserToFireStore(userData: newUser);
           if (result == true) {
+            mainController.currentUserModel.value = newUser;
+
+            getAllUsers();
+
             snackBarService.showSnackbar(
                 color: AppColors.kcDarkColor,
                 message: "You have been logged in",

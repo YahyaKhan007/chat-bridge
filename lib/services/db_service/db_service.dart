@@ -161,4 +161,37 @@ class DataBaseService {
   Future<void> updateMessageInFirestore(
       {required MessageModel updatedMessage,
       required ChatroomModel chatroom}) async {}
+
+Future<List<int>?> getAllUniqueNumbers() async {
+    try {
+      final docSnapshot =
+          await firestoreAuth.collection('unique_numbers').doc('unique').get();
+
+      if (docSnapshot.exists) {
+        final data = docSnapshot.data();
+        if (data != null && data['numbers'] != null) {
+          return List<int>.from(data['numbers']);
+        }
+      }
+    } catch (e, stackTrace) {
+      log("Error getting unique numbers: $e");
+      log("StackTrace: $stackTrace");
+    }
+    return null;
+  }
+
+  Future<void> pushUniqueNumberToFireStore() async {
+    try {
+      final uniqueNumber = Get.find<ChatBridgeMainController>().uniqueNumber.value;
+      await firestoreAuth.collection('unique_numbers').doc('unique').set(
+        {
+          'numbers': FieldValue.arrayUnion([uniqueNumber]),
+        },
+        SetOptions(merge: true, ),
+      );
+        } catch (e, stackTrace) {
+      log("Error pushing unique number: $e");
+      log("StackTrace: $stackTrace");
+    }
+  }
 }

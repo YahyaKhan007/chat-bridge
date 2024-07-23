@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_bridge/models/models.dart';
+import 'package:chat_bridge/views/screens/home_screens/message_screen/call_page/call_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -84,6 +86,11 @@ PreferredSize customeAppbar(BuildContext context, UserModel targetUser) {
                     ),
                   ],
                 ),
+                trailing: IconButton(
+                    onPressed: () {
+                      Get.to(() => CallPage(callID: '', userID: targetUser.uid, userName: targetUser.fullName,));
+                    },
+                    icon: const Icon(CupertinoIcons.videocam_circle_fill)),
               ),
             ],
           ),

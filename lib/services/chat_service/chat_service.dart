@@ -73,4 +73,6 @@ class ChatService {
     await dbService.addMessageToFirestore(
         newMessage: message, chatroom: chatroom);
   }
+
+
 }

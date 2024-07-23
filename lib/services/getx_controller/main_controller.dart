@@ -10,6 +10,7 @@ class ChatBridgeMainController extends GetxController {
   Rxn<XFile> pickedImage = Rxn<XFile>(null);
   RxInt currentIndex = 0.obs;
   RxList<UserModel> allUsers = <UserModel>[].obs;
+  Rx<int> uniqueNumber = 0.obs;
 
 // * clear Data
   clearData() {

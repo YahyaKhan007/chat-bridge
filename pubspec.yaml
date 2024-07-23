@@ -62,14 +62,10 @@ dependencies:
   flutter_svg: ^2.0.10+1
   cached_network_image: ^3.3.1
   icons_plus: ^5.0.0
-  salomon_bottom_bar: ^3.3.2
-  stylish_bottom_bar: ^1.1.0
-  persistent_bottom_nav_bar: ^6.2.1
-  dot_navigation_bar: ^1.0.2
-  responsive_navigation_bar: ^5.0.2
-  flutter_card_swiper: ^7.0.1
   uuid: ^4.4.2
   shimmer: ^3.0.0
+  zego_uikit_prebuilt_call: ^4.14.2
+  responsive_navigation_bar: ^5.0.2
 
 dev_dependencies:
   flutter_test:

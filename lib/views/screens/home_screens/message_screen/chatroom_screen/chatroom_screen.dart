@@ -1,8 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:developer';
-
-import 'package:chat_bridge/models/chat_models/message_model/message_model.dart';
 import 'package:chat_bridge/views/utils/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

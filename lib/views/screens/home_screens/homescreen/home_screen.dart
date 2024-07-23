@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_bridge/blocs/chat_bloc/chat_bloc.dart';
 import 'package:chat_bridge/services/getx_controller/main_controller.dart';
@@ -17,6 +19,9 @@ class HomeScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     ChatBridgeMainController mainController =
         Get.find<ChatBridgeMainController>();
+
+    log(mainController.currentUserModel.value!.uid);
+
     return Scaffold(
       body: Obx(
         () => SizedBox(

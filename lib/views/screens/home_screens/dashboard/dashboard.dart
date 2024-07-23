@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:chat_bridge/services/getx_controller/main_controller.dart';
 import 'package:chat_bridge/views/screens/views.dart';
-import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

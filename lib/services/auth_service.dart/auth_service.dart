@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, unused_local_variable
 
 import 'dart:developer';
+import 'package:chat_bridge/services/getx_controller/main_controller.dart';
 import 'package:chat_bridge/views/utils/app_colors.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../models/models.dart';
@@ -19,6 +21,18 @@ class AuthService {
   // EmailOtpService().getAuth();
   // EmailOtpService otpService = EmailOtpService();
 
+  //
+
+// ^ Signup User
+  int _counter = 0;
+  final int _maxCounterValue = 99999; // Adjust based on your needs
+
+  int generateUniqueInteger() {
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    _counter = (_counter + 1) % _maxCounterValue;
+    return int.parse('$timestamp$_counter');
+  }
+
   Future<UserModel?> alreadyLoggedInUser() async {
     User? currentUser = auth.currentUser;
     if (currentUser != null) {
@@ -29,14 +43,13 @@ class AuthService {
     }
   }
 
-// ^ Signup User
   Future<({bool isSuccess, UserModel? userModel})> signupUserWithEmailPassword({
     required String userEmail,
     required String userPassword,
     required String confirmPassword,
     required String fullName,
-    // required bool isOtpApproved,
   }) async {
+    final mainController = Get.find<ChatBridgeMainController>();
     if (userEmail.isEmpty ||
         userPassword.isEmpty ||
         userPassword != confirmPassword) {
@@ -48,51 +61,23 @@ class AuthService {
       return (isSuccess: false, userModel: null);
     } else {
       try {
-        //  Otp Not  approved
-
-        // if (!isOtpApproved) {
-        //   log("Hello  GGggg   OTP not approved");
-        //   myOtp.setConfig(
-        //       appEmail: "me@rohitchouhan.com",
-        //       appName: "Email OTP",
-        //       userEmail: userEmail,
-        //       otpLength: 4,
-        //       otpType: OTPType.digitsOnly);
-
-        //   if (await myOtp.sendOTP() == true) {
-        //     snackBarService.showSnackbar(
-        //         message: "OTP has been sent to your email",
-        //         duration: 2,
-        //         title: "OTP sent",
-        //         color: Colors.green);
-
-        //     // Get.to(() => OTPScreen(
-        //     //       confirmPassword: confirmPassword,
-        //     //       password: userPassword,
-        //     //       email: userEmail,
-        //     //       myAuth: myOtp,
-        //     //     ));
-
-        //     return true;
-        //   } else {
-        //     snackBarService.showSnackbar(
-        //         message: "OTP Failed",
-        //         duration: 2,
-        //         title: "OTP sending failed",
-        //         color: Colors.red);
-        //     return false;
-        //   }
-        // }
-        // // * Otp  approved
-        // else {
-        // log("Hello  GGggg   OTP  approved");
-
         var userCredential = await auth.createUserWithEmailAndPassword(
             email: userEmail, password: userPassword);
 
         log(userCredential.user!.email.toString());
 
         User? user = userCredential.user;
+
+        final allUniqueNumbers = await dbService.getAllUniqueNumbers();
+
+        int newUniqueNumber;
+        do {
+          newUniqueNumber = generateUniqueInteger();
+        } while (allUniqueNumbers != null &&
+            allUniqueNumbers.contains(newUniqueNumber));
+
+        mainController.uniqueNumber.value = newUniqueNumber;
+        await dbService.pushUniqueNumberToFireStore();
 
         if (user != null) {
           UserModel newUserMode = UserModel(
@@ -104,6 +89,7 @@ class AuthService {
               fullName: fullName,
               emailAddress: userEmail,
               phoneNumber: '',
+              uniqueNumber: mainController.uniqueNumber.value,
               isVarified: true);
 
           var result =
@@ -117,7 +103,6 @@ class AuthService {
                 title: 'Signup Successful');
             return (isSuccess: true, userModel: newUserMode);
           }
-          // }
 
           return (isSuccess: false, userModel: null);
         }
@@ -129,7 +114,7 @@ class AuthService {
             color: Colors.red);
         return (isSuccess: false, userModel: null);
       } catch (e, stackTrace) {
-        log('Error : ${e.toString()}\n\n');
+        log('Error : ${e.toString()}');
         log('stackTrace : ${stackTrace.toString()}');
         return (isSuccess: false, userModel: null);
       }
